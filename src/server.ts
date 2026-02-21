@@ -1,5 +1,5 @@
 import app from "./app";
-import { ENV } from "./config/env";
+import { ENV } from "./app/config/env";
 
 async function startServer() {
   try {
