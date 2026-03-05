@@ -9,6 +9,7 @@ model Admin {
     updatedAt     DateTime  @updatedAt
     deletedAt     DateTime?
 
+    // relations
     userId String @unique
     user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
