@@ -119,3 +119,8 @@ export type DoctorSchedules = Prisma.DoctorSchedulesModel
  * 
  */
 export type Specialty = Prisma.SpecialtyModel
+/**
+ * Model DoctorSpecialty
+ * 
+ */
+export type DoctorSpecialty = Prisma.DoctorSpecialtyModel
