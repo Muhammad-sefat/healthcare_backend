@@ -7,10 +7,17 @@ const router = Router();
 
 router.post("/register", AuthController.registerPatient);
 router.post("/login", AuthController.loginUser);
-router.get(
-  "/me",
+router.get("/me", checkAuth(Role.PATIENT), AuthController.getMe);
+router.post("/refresh-token", AuthController.getNewToken);
+router.post(
+  "/change-password",
   checkAuth(Role.ADMIN, Role.DOCTOR, Role.PATIENT, Role.SUPER_ADMIN),
-  AuthController.getMe,
+  AuthController.changePassword,
+);
+router.post(
+  "/logout",
+  checkAuth(Role.ADMIN, Role.DOCTOR, Role.PATIENT, Role.SUPER_ADMIN),
+  AuthController.logoutUser,
 );
 
 export const AuthRoutes = router;

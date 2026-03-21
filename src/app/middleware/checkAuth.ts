@@ -18,6 +18,7 @@ export const checkAuth =
         "better-auth.session_token",
       );
 
+      console.log(sessionToken);
       if (!sessionToken) {
         throw new Error("Unauthorized access! No session token provided.");
       }
