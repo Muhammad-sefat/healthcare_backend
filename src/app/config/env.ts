@@ -12,6 +12,13 @@ interface EnvConfig {
   REFRESH_TOKEN_EXPIRES_IN: string;
   BETTER_AUTH_SESSION_TOKEN_EXPIRES_IN: string;
   BETTER_AUTH_SESSION_TOKEN_UPDATE_AGE: string;
+  EMAIL_SENDER: {
+    SMTP_USER: string;
+    SMTP_PASS: string;
+    SMTP_HOST: string;
+    SMTP_PORT: string;
+    SMTP_FROM: string;
+  };
 }
 
 export const ENV: EnvConfig = {
@@ -28,4 +35,11 @@ export const ENV: EnvConfig = {
     .BETTER_AUTH_SESSION_TOKEN_EXPIRES_IN as string,
   BETTER_AUTH_SESSION_TOKEN_UPDATE_AGE: process.env
     .BETTER_AUTH_SESSION_TOKEN_UPDATE_AGE as string,
+  EMAIL_SENDER: {
+    SMTP_USER: process.env.EMAIL_SENDER_SMTP_USER as string,
+    SMTP_PASS: process.env.EMAIL_SENDER_SMTP_PASS as string,
+    SMTP_HOST: process.env.EMAIL_SENDER_SMTP_HOST as string,
+    SMTP_PORT: process.env.EMAIL_SENDER_SMTP_PORT as string,
+    SMTP_FROM: process.env.EMAIL_SENDER_SMTP_FROM as string,
+  },
 };
