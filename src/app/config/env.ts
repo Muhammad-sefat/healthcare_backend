@@ -19,6 +19,15 @@ interface EnvConfig {
     SMTP_PORT: string;
     SMTP_FROM: string;
   };
+  GOOGLE_CLIENT_ID: string;
+  GOOGLE_CLIENT_SECRET: string;
+  GOOGLE_CALLBACK_URL: string;
+  FRONTEND_URL: string;
+  CLOUDINARY: {
+    CLOUDINARY_CLOUD_NAME: string;
+    CLOUDINARY_API_KEY: string;
+    CLOUDINARY_API_SECRET: string;
+  };
 }
 
 export const ENV: EnvConfig = {
@@ -41,5 +50,14 @@ export const ENV: EnvConfig = {
     SMTP_HOST: process.env.EMAIL_SENDER_SMTP_HOST as string,
     SMTP_PORT: process.env.EMAIL_SENDER_SMTP_PORT as string,
     SMTP_FROM: process.env.EMAIL_SENDER_SMTP_FROM as string,
+  },
+  GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID as string,
+  GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET as string,
+  GOOGLE_CALLBACK_URL: process.env.GOOGLE_CALLBACK_URL as string,
+  FRONTEND_URL: process.env.FRONTEND_URL as string,
+  CLOUDINARY: {
+    CLOUDINARY_CLOUD_NAME: process.env.CLOUDINARY_CLOUD_NAME as string,
+    CLOUDINARY_API_KEY: process.env.CLOUDINARY_API_KEY as string,
+    CLOUDINARY_API_SECRET: process.env.CLOUDINARY_API_SECRET as string,
   },
 };

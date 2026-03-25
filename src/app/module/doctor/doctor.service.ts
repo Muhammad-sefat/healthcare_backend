@@ -3,7 +3,7 @@ import AppError from "../../errorHelpers/AppError";
 import { prisma } from "../../lib/prisma";
 import { IUpdateDoctorPayload } from "./doctor.interface";
 import { UserStatus } from "../../../generated/prisma/enums";
-import { IQueryParams } from "../../interface/query.interfaces";
+import { IQueryParams } from "../../interfaces/query.interfaces";
 
 const getAllDoctors = async (query: IQueryParams) => {
   const doctors = await prisma.doctor.findMany({
