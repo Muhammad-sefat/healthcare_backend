@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { JwtPayload } from "jsonwebtoken";
-import { UserStatus } from "../../../generated/prisma/enums";
+import { Role, UserStatus } from "../../../generated/prisma/enums";
 import { ENV } from "../../config/env";
 import AppError from "../../errorHelpers/AppError";
 import { IRequestUser } from "../../interfaces/requestUser.interface";
@@ -25,7 +25,7 @@ const registerPatient = async (payload: IRegisterPatientPayload) => {
       password,
       //default values
       // needsPasswordChange: false,
-      // role: Role.PATIENT
+      role: Role.PATIENT,
     },
   });
 
@@ -42,6 +42,7 @@ const registerPatient = async (payload: IRegisterPatientPayload) => {
           userId: data.user.id,
           name: payload.name,
           email: payload.email,
+          role: payload.role,
         },
       });
 

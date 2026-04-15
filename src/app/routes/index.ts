@@ -13,6 +13,6 @@ router.use("/specialties", SpecialtyRoutes);
 router.use("/users", UserRoutes);
 router.use("/doctors", DoctorRoutes);
 router.use("/scheule", scheduleRoutes);
-router.use("donctor-schedule", DoctorScheduleRoutes);
+router.use("/doctor-schedule", DoctorScheduleRoutes);
 
 export const IndexRoutes = router;
