@@ -1,17 +1,21 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import express from "express";
+import express, { Request, Response } from "express";
 import cookieParser from "cookie-parser";
 import { IndexRoutes } from "./app/routes";
 import { toNodeHandler } from "better-auth/node";
 import { auth } from "./app/lib/auth";
 import path from "path";
+import qs from "qs";
 import cors from "cors";
 import cron from "node-cron";
 import { ENV } from "./app/config/env";
 import { PaymentController } from "./app/module/payment/payment.controller";
 import { AppointmentService } from "./app/module/appointment/appointment.service";
+import { notFound } from "./app/middleware/notFound";
+import { globalErrorHandler } from "./app/middleware/globalErrorHandler";
 
 const app = express();
+app.set("query parser", (str: string) => qs.parse(str));
 app.set("view engine", "ejs");
 app.set("views", path.resolve(process.cwd(), `src/app/templates`));
 
@@ -48,16 +52,23 @@ cron.schedule("*/25 * * * *", async () => {
   }
 });
 
+// Stripe webhook endpoint
 app.post(
   "/webhook",
   express.raw({ type: "application/json" }),
   PaymentController.handleStripeWebhookEvent,
 );
-// Example route
-app.get("/", (req, res) => {
-  res.json({ message: "Server is running 🚀" });
+// Routes
+app.use("/api/v1", IndexRoutes);
+// Basic route
+app.get("/", async (req: Request, res: Response) => {
+  res.status(201).json({
+    success: true,
+    message: "API is working",
+  });
 });
 
-app.use("/api/v1", IndexRoutes);
+app.use(globalErrorHandler);
+app.use(notFound);
 
 export default app;
