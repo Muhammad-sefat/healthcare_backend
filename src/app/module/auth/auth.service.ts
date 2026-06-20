@@ -42,7 +42,6 @@ const registerPatient = async (payload: IRegisterPatientPayload) => {
           userId: data.user.id,
           name: payload.name,
           email: payload.email,
-          role: payload.role,
         },
       });
 
