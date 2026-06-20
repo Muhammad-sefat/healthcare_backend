@@ -1,4 +1,4 @@
-import app from "./app";
+import app from "./app.server";
 import { ENV } from "./app/config/env";
 import { seedSuperAdmin } from "./app/utils/seed";
 
