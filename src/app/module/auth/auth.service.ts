@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { JwtPayload } from "jsonwebtoken";
-import { Role, UserStatus } from "../../../generated/prisma/enums";
+import { Gender, Role, UserStatus } from "../../../generated/prisma/enums";
 import { ENV } from "../../config/env";
 import AppError from "../../errorHelpers/AppError";
 import { IRequestUser } from "../../interfaces/requestUser.interface";
@@ -16,7 +16,7 @@ import {
 import status from "http-status";
 
 const registerPatient = async (payload: IRegisterPatientPayload) => {
-  const { name, email, password } = payload;
+  const { name, email, password, role } = payload;
 
   const data = await auth.api.signUpEmail({
     body: {
@@ -25,7 +25,7 @@ const registerPatient = async (payload: IRegisterPatientPayload) => {
       password,
       //default values
       // needsPasswordChange: false,
-      role: Role.PATIENT,
+      role: (role as Role) || Role.PATIENT,
     },
   });
 
@@ -34,18 +34,39 @@ const registerPatient = async (payload: IRegisterPatientPayload) => {
     throw new AppError(status.BAD_REQUEST, "Failed to register patient");
   }
 
-  //TODO : Create Patient Profile In Transaction After Sign Up Of Patient In USer Model
+  //Create Profile In Transaction After Sign Up Of User In User Model
   try {
-    const patient = await prisma.$transaction(async (tx) => {
-      const patientTx = await tx.patient.create({
-        data: {
-          userId: data.user.id,
-          name: payload.name,
-          email: payload.email,
-        },
-      });
-
-      return patientTx;
+    const profile = await prisma.$transaction(async (tx) => {
+      if (data.user.role === Role.DOCTOR) {
+        return await tx.doctor.create({
+          data: {
+            userId: data.user.id,
+            name: payload.name,
+            email: payload.email,
+            gender: Gender.MALE,
+            appointmentFee: 0,
+            qualification: "Not Specified",
+            currentWorkplace: "Not Specified",
+            designation: "Not Specified",
+          },
+        });
+      } else if (data.user.role === Role.ADMIN) {
+        return await tx.admin.create({
+          data: {
+            userId: data.user.id,
+            name: payload.name,
+            email: payload.email,
+          },
+        });
+      } else {
+        return await tx.patient.create({
+          data: {
+            userId: data.user.id,
+            name: payload.name,
+            email: payload.email,
+          },
+        });
+      }
     });
 
     const accessToken = tokenUtils.getAccessToken({
@@ -72,7 +93,7 @@ const registerPatient = async (payload: IRegisterPatientPayload) => {
       ...data,
       accessToken,
       refreshToken,
-      patient,
+      patient: profile,
     };
   } catch (error) {
     console.log("Transaction error : ", error);

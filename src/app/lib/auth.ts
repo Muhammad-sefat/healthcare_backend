@@ -73,6 +73,7 @@ export const auth = betterAuth({
     emailOTP({
       overrideDefaultEmailVerification: true,
       async sendVerificationOTP({ email, otp, type }) {
+        console.log(`%c[Auth] Generated OTP for ${email} (${type}): ${otp}`, "color: #e11d48; font-weight: bold;");
         if (type === "email-verification") {
           const user = await prisma.user.findUnique({
             where: { email },

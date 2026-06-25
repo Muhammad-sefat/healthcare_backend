@@ -14,20 +14,20 @@ const registerPatient = catchAsync(async (req: Request, res: Response) => {
   const payload = req.body;
   const result = await AuthService.registerPatient(payload);
 
-  const { accessToken, refreshToken, token, ...rest } = result;
+  const { accessToken, refreshToken, user, patient } = result;
+
   tokenUtils.setAccessTokenCookie(res, accessToken);
   tokenUtils.setRefreshTokenCookie(res, refreshToken);
-  tokenUtils.setBetterAuthSessionCookie(res, token as string);
 
   sendResponse(res, {
     httpStatusCode: 201,
     success: true,
     message: "Patient registered successfully",
     data: {
-      result,
+      user,
+      patient,
       accessToken,
       refreshToken,
-      ...rest,
     },
   });
 });
