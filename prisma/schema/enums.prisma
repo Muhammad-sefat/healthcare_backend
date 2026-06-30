@@ -35,7 +35,7 @@ enum AppointmentStatus {
   COMPLETED
   CANCELED
 }
-
+ 
 enum PaymentStatus {
   PAID
   UNPAID

@@ -17,6 +17,7 @@ model User {
     patient            Patient?
     doctor             Doctor?
     admin              Admin?
+    specialties        Specialty[]
 
     @@unique([email])
     @@map("user")

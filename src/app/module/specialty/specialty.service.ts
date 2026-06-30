@@ -1,9 +1,17 @@
 import { Specialty } from "../../../generated/prisma/client";
 import { prisma } from "../../lib/prisma";
+import { CreateSpecialtyPayload } from "./specialty.types";
 
-const createSpecialty = async (payload: Specialty): Promise<Specialty> => {
+const createSpecialty = async (
+  payload: CreateSpecialtyPayload,
+): Promise<Specialty> => {
   const specialty = await prisma.specialty.create({
-    data: payload,
+    data: {
+      title: payload.title,
+      description: payload.description,
+      image: payload.image,
+      adminId: payload.adminId,
+    },
   });
 
   return specialty;
