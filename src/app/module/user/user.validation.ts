@@ -55,6 +55,7 @@ export const createDoctorZodSchema = z.object({
       .string("Designation is required")
       .min(2, "Designation must be at least 2 characters")
       .max(50, "Designation must be at most 50 characters"),
+    profilePhoto: z.string().optional(),
   }),
   specialties: z
     .array(z.uuid(), "Specialties must be an array of strings")

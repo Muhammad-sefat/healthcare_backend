@@ -4,7 +4,13 @@ import { catchAsync } from "../../shared/catchAsync";
 import status from "http-status";
 
 const createDoctor = catchAsync(async (req: Request, res: Response) => {
-  const payload = req.body;
+  const payload = {
+    ...req.body,
+    doctor: {
+      ...req.body.doctor,
+      profilePhoto: req.file?.path,
+    },
+  };
   const result = await UserService.createDoctor(payload);
   res.status(201).json({
     httpStatusCode: status.CREATED,

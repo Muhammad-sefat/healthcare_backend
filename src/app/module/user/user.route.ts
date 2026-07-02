@@ -4,10 +4,13 @@ import { validateRequest } from "../../middleware/validateRequest";
 import { createAdminZodSchema, createDoctorZodSchema } from "./user.validation";
 import { checkAuth } from "../../middleware/checkAuth";
 
+import { multerUpload } from "../../config/multer.config";
+
 const router = express.Router();
 
 router.post(
   "/create-doctor",
+  multerUpload.single("image"),
   validateRequest(createDoctorZodSchema),
   UserController.createDoctor,
 );
