@@ -99,7 +99,7 @@ const bookAppointment = async (
         paymentId: paymentData.id,
       },
 
-      success_url: `${ENV.FRONTEND_URL}/dashboard/payment/payment-success`,
+      success_url: `${ENV.FRONTEND_URL}/dashboard/payment/payment-success?appointment_id=${appointmentData.id}&payment_id=${paymentData.id}`,
 
       // cancel_url: `${envVars.FRONTEND_URL}/dashboard/payment/payment-failed`,
       cancel_url: `${ENV.FRONTEND_URL}/dashboard/appointments`,
